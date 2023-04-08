@@ -1,0 +1,340 @@
+<style>
+
+
+/* -------------------------- */
+.text-font{
+font-family: futura-pt,Tahoma,Geneva,Verdana,Arial,sans-serif;
+font-weight: 700;
+letter-spacing: .156rem;
+font-size: 1.125rem;
+}
+.text-price{
+padding: 0 .625rem;
+font-family: futura-pt,Tahoma,Geneva,Verdana,Arial,sans-serif;
+font-style: normal;
+font-size: .75rem;
+font-weight: 700;
+line-height: .813rem;
+letter-spacing: 1.6px;
+}
+.text-descriptions{
+font-family: futura-pt,Tahoma,Geneva,Verdana,Arial,sans-serif;
+font-style: normal;
+font-size: .75rem;
+font-weight: 400;
+line-height: 1.125rem;
+margin: .313rem 0 .938rem;
+padding: 0 .625rem;
+}
+.button-color{
+color: #4e4e4e ;
+border-color: #4e4e4e ;
+}
+.button-order{
+font-family: futura-pt,Tahoma,Geneva,Verdana,Arial,sans-serif;
+font-style: normal;
+font-size: .75rem;
+font-weight: 700;
+background-color: hsl(90, 40%, 50%);
+color: white;
+}
+
+</style>
+
+<%- include ('../layouts/userHeader.ejs') %>
+
+<div class="container my-5 py-5">
+
+
+  <div class="col-lg-6">
+    <div class="discount__content">
+        <h6>Discount codes</h6>
+         <form action="#"><input  id="searchOffer" type="text" placeholder="Enter your coupon code"></form> 
+        
+        <button type="button" onclick="applyCoupons()" class="site-btn">Apply</button>
+ 
+<!-- Button trigger modal -->
+<button type="button"  class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal">
+ Show Coupons
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        
+      </div>
+      <%for(i=0;i<coupon.length;i++){%>
+      <div class="modal-body">
+        
+        <h4 id="<%-i%>" style="color:black;" ><%-coupon[i].name %></h4>
+        <h6 style="background-color: red;">upto <%-coupon[i].discount %> % discount</h6><button onclick="copyText('<%-i%>')" class="btn btn-outline-success">copy</button>
+        <p>you will get upto <%-coupon[i].max %>rs discount <br>on a minimum purchase of <%-coupon[i].min %>  </p>
+      
+      </div>
+      
+      <%}%>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+    </div>
+    
+</div>
+    <!--Section: Design Block-->
+    <section>
+  
+      <div class="row">
+        <div class="col-md-8">
+          
+  <form action="/checkOut" method="post"> 
+          <% for(i=0;i<address.length;i++){ %>
+          <div class="card mb-4">
+            <div class="card-body">
+              <p class="text-uppercase fw-bold mb-3 text-font">Address</p>
+                <input name="deliveryAddress" value="<%=address[i]._id%>" type="radio">
+              <div class="row">
+                
+                <div class="col-md-4">
+                  <p><%-address[i].firstname%><%-address[i].lastname%></p>
+                  <p><%-address[i].mobile%>
+                  <%-address[i].address%>
+                  <%-address[i].city%>
+                  <%-address[i].state%>
+                  <%-address[i].zip%>
+                  <%-address[i].country%></p>
+                  
+                </div>
+               
+              </div>
+              
+              
+            </div>
+        </div>
+        <%}%>
+        </div>
+        <div class="col-md-4 mb-4 position-static">
+            
+          <div class="card mb-4">
+            <div class="card-header py-3">
+              <h5 class="mb-0 text-font">1 item <span class="float-end mt-1"
+                  style="font-size: 13px ;">Edit</span></h5>
+            </div>
+            <div class="card-body">
+                <%for ( i = 0; i < products.item.length ;i++){%>
+              <div class="row">
+                <div class="col-md-4">
+                  <img src="/uploads/<%-products.item[i].productId.image[0]%>"
+                    class="rounded-3" style="width: 100px; height: 100px;" alt="Blue Jeans Jacket" />
+                </div>
+                <div class="col-md-6 ms-3">
+                  <span class="mb-0 text-price"><%-products.item[i].productId.price%></span>
+                  <p class="mb-0 text-descriptions"><%-products.item[i].productId.name%> </p>
+                  <span class="text-descriptions fw-bold">Black</span> <span
+                    class="text-descriptions fw-bold">UK 8</span>
+                  <p class="text-descriptions mt-0">Qty:<span class="text-descriptions fw-bold"><%-products.item[i].qty%></span>
+                  </p>
+                </div>
+              </div>
+              <hr>
+              <%}%>
+              <div class="card-footer mt-4">
+                <ul class="list-group list-group-flush">
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 text-muted">
+                    Subtotal
+                    <span><%-products.totalPrice%></span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center px-0 fw-bold text-uppercase">
+                    Total to pay
+                    <span id="totalToPay"><%-products.totalPrice%></span>
+                    <input type="hidden" name="rupees" id="subT" value="<%-products.totalPrice%>">
+                  </li>
+                </ul>
+              </div>
+  
+  
+            </div>
+          </div>
+          <div class="text-center">
+
+
+            <div class="container">
+              <div class="row">
+                <div class="col d-flex align-items-center">
+                  
+                  <div class="swappy-radios" role="radiogroup" aria-labelledby="swappy-radios-label">
+                    <h3 style=" color: green; font-size: 2.5rem;
+                    " id="swappy-radios-label">Select Payment Mode</h3>
+                    <hr>
+                    <label>
+                      <input type="radio" value="COD" name="payment" checked />
+                      <span  class="radio"></span>
+                      <span style=" font-size: 1.5rem; color: rgb(116, 116, 209);">COD |</span>
+                    </label>
+                    <label>
+                      <input type="radio" value="ONLINE" name="payment" />
+                      <span class="radio"></span>
+                      <span style=" font-size: 1.5rem; color: rgb(181, 83, 22);">ONLINE |</span>
+                    </label>       
+                    <label>
+                      <input type="radio" value="WALLET" name="payment" />
+                      <span class="radio"></span>
+                      <span style=" font-size: 1.5rem; color: rgb(170, 22, 181);">WALLET</span>
+                    </label>       
+                  </div>
+                  
+                  
+
+
+                </div>
+              </div>
+            </div>
+
+
+
+
+            <button type="submit" class="btn btn-primary btn-lg col-md-10 mt-3 ">Place order</button>
+            </form>
+          </div>
+        </div>
+  
+        <div class="col-md-8 mb-4">
+          <div class="card mb-4">
+            <div class="card-header py-3">
+              <h5 class="mb-0 text-font text-uppercase">Delivery address</h5>
+            </div>
+            <div class="card-body">
+              <form action="/addAdress" method="post">
+  
+                <div class="row mb-4">
+                  <div class="col">
+                    <div class="form-outline">
+                      <input name="firstName" type="text" id="form11Example1" class="form-control" />
+                      <label class="form-label" for="form11Example1">First name</label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-outline">
+                      <input name="lastName" type="text" id="form11Example2" class="form-control" />
+                      <label class="form-label" for="form11Example2">Last name</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input name="mobile" type="number" id="form11Example3" class="form-control" />
+                  <label class="form-label" for="form11Example3">Mobile</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input name="address" type="text" id="form11Example4" class="form-control" />
+                    <label class="form-label" for="form11Example4">Address</label>
+                </div>
+                
+                <div class="form-outline mb-4">
+                    <input name="zip" type="number" id="form11Example3" class="form-control" />
+                    <label class="form-label" for="form11Example3">ZIP code </label>
+                  </div>
+                  <div class="form-outline mb-4">
+                    <input name="city" type="text" id="form11Example5" class="form-control" />
+                    <label class="form-label" for="form11Example5">City</label>
+                  </div>
+    
+                  <!-- Number input -->
+                  <div class="form-outline mb-4">
+                    <input name="state" type="text" id="form11Example6" class="form-control" />
+                    <label class="form-label" for="form11Example6">State</label>
+                  </div>
+                <!-- Text input -->
+                <div class="form-outline mb-4">
+                  <input name="country" type="text" id="form11Example3" class="form-control" />
+                  <label class="form-label" for="form11Example3">Country</label>
+                </div>
+                
+                <!-- Text input -->
+  
+                <!-- Email input -->
+
+
+
+                 
+  
+                <!-- Message input -->
+                
+  
+                <!-- Checkbox -->
+                <div class="text-center">
+                    <button type="submit" class="btn button-order col-md-10">Add Address</button>
+                  </div>
+              </form>
+            </div>
+  
+          </div>
+         
+  
+        </div>
+  
+  
+  
+  
+  
+  
+      </div>
+  
+    </section>
+    <!--Section: Design Block-->`
+  
+  </div>
+
+  <script>
+    function copyText(id) {
+    const textToCopy = document.getElementById(id).innerHTML;
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      alert('Text copied successfully!')})
+      document.getElementById("searchOffer").value=`${textToCopy}`
+     
+
+};
+
+function applyCoupons() {
+const cop = document.getElementById("searchOffer").value
+          const  subT = document.getElementById('subT').value
+            $.ajax({
+                url: '/offer',
+                type: 'POST',
+                
+                data: { name: cop },
+                success: function (data) {
+                  console.log(data.couponData);
+                  if(subT>=data.couponData.min){
+                    disc = (data.couponData.discount*subT)/100;
+                    if(disc>data.couponData.max){
+                        disc =data.couponData.max
+                    }
+
+                    total = subT-disc;
+                 console.log(subT,total);
+                 document.getElementById('subT').value=`${total}`
+                    document.getElementById("totalToPay").innerHTML=`${total}`
+                  }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+}
+  </script>
+
+  <%- include ('../layouts/userfooter.ejs') %>

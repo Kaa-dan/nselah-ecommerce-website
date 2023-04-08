@@ -1,0 +1,84 @@
+<%- include ('../layouts/userHeader.ejs') %>
+    <!-- Shop Cart Section Begin -->
+    <section class="shop-cart spad">
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="discount__content">
+                        
+                        <form action="#">
+                            
+                            
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4 offset-lg-2">
+                    <div class="cart__total__procced">
+                        <h6>Cart total</h6>
+                        <ul>
+                            <li>Subtotal <span>$ 750.0</span></li>
+                            <li>Total <span id="gTotal">₹<%=cartProduct.totalPrice%></span></li>
+                        </ul>
+                        <a href="/checkOut" class="primary-btn">Proceed to checkout</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                
+                <div class="col-lg-12">
+                    <div class="shop__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(cartProduct){ %>
+                                    <% if(cartProduct.item.length>0){ %>
+                              <% for(let key of cartProduct.item){ %>
+                                <tr>
+                                    <td class="cart__product__item">
+                                       <a href="/productDetail?id=<%-key.productId._id%>"><img height="50rem" width="50rem" src="/uploads/<%=key.productId.image[0] %>"alt=""></a> 
+                                        <div class="cart__product__item__title">
+                                            <h6><%=key.productId.name%></h6>
+                                     
+                                        </div>
+                                    </td>
+                                    <td class="cart__price">₹ <%=key.productId.price%> </td>
+                                    <td class="cart__quantity">
+                                        <div class="pro-qty"> 
+                                            <input type="text"  value="<%=key.qty%>" readonly>
+                                            <input type="hidden" value="<%-key.productId._id%>-<%=key.productId.price%>"
+                                        </div>
+                                    </td>
+                                    <td class="cart__total">₹ <span id="<%-key.productId._id%>"><%=key.productId.price*key.qty%></span></td>
+                                    <td class="cart__close"><a href="/deleteCart?id=<%-key.productId._id%>"><span class="icon_close"></span></a></td>
+                                </tr>
+                                <% } %>
+                                <% } %>
+                                <% } %>
+                              
+                                
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+           
+            
+        </div>
+    </section>
+    <!-- Shop Cart Section End -->
+    <script>
+   
+
+    </script>
+    <%- include ('../layouts/userfooter.ejs') %>

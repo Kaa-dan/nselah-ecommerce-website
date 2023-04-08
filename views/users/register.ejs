@@ -1,0 +1,53 @@
+
+<%- include ('../layouts/userHeader.ejs') %>
+<link rel="stylesheet" href="users/assets/login/css/style.css">
+	<body>
+   <link rel="stylesheet" href="users/assets/login/fonts/linearicons/style.css">
+
+		<div class="wrapper">
+			<div class="inner">
+				<img src="images/image-1.png" alt="" class="image-1">
+				<form action="/register" method="post" onsubmit="return validateSignup()">
+					<h3>New Account?</h3>
+
+					<div class="form-holder">
+						<span class="lnr lnr-user"></span>
+						<input name="name" type="text" class="form-control" id="userName" placeholder="Username" onkeyup="validateName()" >
+					</div>
+          <span id="errorName"></span>
+
+					<div class="form-holder">
+						<span class="lnr lnr-phone-handset"></span>
+						<input name="phone" id="phone" type="text" class="form-control" placeholder="Phone Number" onkeyup="validatePhone()">
+					</div>
+          <span id="errorPhone"></span>
+					<div class="form-holder">
+						<span class="lnr lnr-envelope"></span>
+						<input name="email" id="email" onkeyup="validateEmail()" type="text" class="form-control" placeholder="Mail">
+					</div>
+          <span id="errorEmail"></span>
+
+					<div class="form-holder">
+						<span class="lnr lnr-lock"></span>
+						<input  id="password" name="password" type="password" class="form-control" placeholder="Password" onkeyup="validatePassword()">
+					</div>
+          <span id="errorPassword"></span>
+
+					<div class="form-holder">
+						<span class="lnr lnr-lock"></span>
+						<input id="password2"  name="password2" type="password" class="form-control" placeholder="Confirm Password" onkeyup="confirmPassword()">
+					</div>
+          <span id="errorPassword2"></span>
+					<button onclick="validateEmail(),validateName(),validatePassword(),validatePhone(),confirmPassword()" type="submit">
+						<span>Register</span>
+					</button>
+				</form>
+				<img src="images/image-2.png" alt="" class="image-2">
+			</div>
+			
+		</div>
+		<script src="users/assets/login/js/registerValidation.js"></script>
+		<script src="users/assets/login/js/jquery-3.3.1.min.js"></script>
+		<script src="users/assets/login/js/main.js"></script>
+	</body>
+  <%- include ('../layouts/userfooter.ejs') %>

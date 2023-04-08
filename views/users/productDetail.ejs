@@ -1,0 +1,68 @@
+<%- include ('../layouts/userHeader.ejs') %>
+<!-- Product Details Section Begin -->
+ <section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="product__details__pic">
+                    <div class="product__details__pic__left product__thumb nice-scroll">
+                        <a class="pt active" href="#product-1">
+                            <img src="/uploads/<%-productData.image%>"alt="">
+                        </a>
+                        <a class="pt" href="#product-2">
+                            <img src="/uploads/<%-productData.image%>" alt="">
+                        </a>
+                        <a class="pt" href="#product-3">
+                            <img src="/uploads/<%-productData.image%>" alt="">
+                        </a>
+                        <a class="pt" href="#product-4">
+                            <img src="/uploads/<%-productData.image%>" alt="">
+                        </a>
+                    </div>
+                    <div class="product__details__slider__content">
+                        <div class="product__details__pic__slider owl-carousel">
+                            <img data-hash="product-1" class="product__big__img" src="/uploads/<%-productData.image%>" alt="">
+                            <img data-hash="product-2" class="product__big__img" src="/uploads/<%-productData.image%>" alt="">
+                            <img data-hash="product-3" class="product__big__img" src="/uploads/<%-productData.image%>"alt="">
+                            <img data-hash="product-4" class="product__big__img" src="/uploads/<%-productData.image%>" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="product__details__text">
+                    <h3><%=productData.name%> <span><%-productData.category%></span></h3>
+                    
+                    <div class="product__details__price"> ₹  <%-productData.price%></div>
+                    <p><%=productData.description%></p>
+                    <div class="product__details__button">
+                       
+                        <%if(productData.stock<=0){%>
+                        <a  class="cart-btn"><span class="icon_bag_alt"></span>Out Of Stock</a>
+                        <%}else{%>
+                            <a href="/addToCart?id=<%-productData._id%>" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</a>
+                            <%}%>
+                        <ul>
+                            <li><a href="/addToWishList?id=<%-productData._id%>"><span class="icon_heart_alt"></span></a></li>
+                            <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="product__details__widget">
+                        <ul>
+                          
+                           
+                         
+                            <li>
+                                <span>Promotions:</span>
+                                <p>Free shipping</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+</section>
+<!-- Product Details Section End -->
+<%- include ('../layouts/userfooter.ejs') %>

@@ -1,0 +1,244 @@
+<style>
+    .text-font{
+    font-family: futura-pt,Tahoma,Geneva,Verdana,Arial,sans-serif;
+    font-weight: 700;
+    letter-spacing: .156rem;
+    font-size: 1.125rem;
+    }
+    .text-price{
+    padding: 0 .625rem;
+    font-family: futura-pt,Tahoma,Geneva,Verdana,Arial,sans-serif;
+    font-style: normal;
+    font-size: .75rem;
+    font-weight: 700;
+    line-height: .813rem;
+    letter-spacing: 1.6px;
+    }
+    .text-descriptions{
+    font-family: futura-pt,Tahoma,Geneva,Verdana,Arial,sans-serif;
+    font-style: normal;
+    font-size: .75rem;
+    font-weight: 400;
+    line-height: 1.125rem;
+    margin: .313rem 0 .938rem;
+    padding: 0 .625rem;
+    }
+    .button-color{
+    color: #4e4e4e ;
+    border-color: #4e4e4e ;
+    }
+    .button-order{
+    font-family: futura-pt,Tahoma,Geneva,Verdana,Arial,sans-serif;
+    font-style: normal;
+    font-size: .75rem;
+    font-weight: 700;
+    background-color: hsl(90, 40%, 50%);
+    color: white;
+    }
+    
+    </style>
+    
+    <%- include ('../layouts/userHeader.ejs') %>
+    
+    <div class="container my-5 py-5">
+    
+        <!--Section: Design Block-->
+        <section>
+      
+          <div class="row">
+            <div class="col-md-8">
+              
+             
+      
+              <% for(i=0;i<address.length;i++){ %>
+              <div class="card mb-4">
+                <div class="card-body">
+                  <p class="text-uppercase fw-bold mb-3 text-font">Address</p>
+                    <input name="delivery address" id="<%-address[i]._id%>" type="radio">
+                   
+                  <div class="row">
+                    
+                    <div class="col-md-4">
+                      <p><%-address[i].firstname%><%-address[i].lastname%>
+                      <%-address[i].mobile%></p>
+                      <p><%-address[i].address%>,
+                      <%-address[i].city%>,
+                      <%-address[i].state%>,
+                      <%-address[i].zip%>,
+                      <%-address[i].country%></p>
+                      
+                    </div>
+                    <a href="/deleteAddress?id=<%-address[i]._id%>"><button class="btn-danger">delete</button></a>
+                 
+                   
+
+
+
+
+                    <button type="button" style="height: 30px;" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">edit</button>
+                  
+                    
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <form action="/editAddress?id=<%-address[i]._id%>" method="post">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Address</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form>
+                              <div class="form-group">
+                               
+                                <input type="text" value="<%-address[i].firstname%>" class="form-control" name="firstName" id="recipient-name">
+                              </div>
+                              <div class="form-group">
+                               
+                                <input type="text" value="<%-address[i].lastname%>" class="form-control" name="lastName" id="recipient-name">
+                              </div>
+                              <div class="form-group">
+                                <input value="<%-address[i].country%>" name="country" type="text" class="form-control" id="recipient-name">
+                              </div>
+                              <div class="form-group">
+                                <input value="<%-address[i].address%>" name="address" type="text" class="form-control" id="recipient-name">
+                              </div>
+                             
+                              <div class="form-group">
+                          
+                                <input value="<%-address[i].city%>" name="city" type="text" class="form-control" id="recipient-name">
+                              </div>
+                              <div class="form-group">
+                              
+                                <input value="<%-address[i].state%>" name="state" type="text" class="form-control" id="recipient-name">
+                              </div>
+                              <div class="form-group">
+                                
+                                <input value="<%-address[i].zip%>" name="zip" type="text" class="form-control" id="recipient-name">
+                              </div>
+                              <div class="form-group">
+                                <input value="<%-address[i].mobile%>" name="mobile" type="text" class="form-control" id="recipient-name">
+                              </div>
+                            </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">cancel</button>
+                            <button type="submit" class="btn btn-success">save</button>
+                          </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+
+
+                  </div>
+                  
+                  
+                </div>
+            </div>
+            <%}%>
+            </div>
+
+
+            <div class="col-md-4 mb-4 position-static">
+            
+    
+              
+
+  
+    <div class="card mb-4">
+      <div class="card-header py-3">
+        <h5 class="mb-0 text-font text-uppercase">Delivery address</h5>
+      </div>
+      <div class="card-body">
+        <form action="/profileAddress" method="post">
+
+          <div class="row mb-4">
+            <div class="col">
+              <div class="form-outline">
+                <input name="firstName" type="text" id="form11Example1" class="form-control" />
+                <label class="form-label" for="form11Example1">First name</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-outline">
+                <input name="lastName" type="text" id="form11Example2" class="form-control" />
+                <label class="form-label" for="form11Example2">Last name</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-outline mb-4">
+            <input name="mobile" type="number" id="form11Example3" class="form-control" />
+            <label class="form-label" for="form11Example3">Mobile</label>
+          </div>
+
+          <div class="form-outline mb-4">
+              <input name="address" type="text" id="form11Example4" class="form-control" />
+              <label class="form-label" for="form11Example4">Address</label>
+          </div>
+          
+          <div class="form-outline mb-4">
+              <input name="zip" type="number" id="form11Example3" class="form-control" />
+              <label class="form-label" for="form11Example3">ZIP code </label>
+            </div>
+            <div class="form-outline mb-4">
+              <input name="city" type="text" id="form11Example5" class="form-control" />
+              <label class="form-label" for="form11Example5">City</label>
+            </div>
+
+            <!-- Number input -->
+            <div class="form-outline mb-4">
+              <input name="state" type="text" id="form11Example6" class="form-control" />
+              <label class="form-label" for="form11Example6">State</label>
+            </div>
+          <!-- Text input -->
+          <div class="form-outline mb-4">
+            <input name="country" type="text" id="form11Example3" class="form-control" />
+            <label class="form-label" for="form11Example3">Country</label>
+          </div>
+          
+          <!-- Text input -->
+
+          <!-- Email input -->
+
+
+
+           
+
+          <!-- Message input -->
+          
+
+          <!-- Checkbox -->
+          <div class="text-center">
+              <button class="btn-primary" type="submit" class="btn button-order col-md-10">Add Address</button>
+            </div>
+        </form>
+      </div>
+
+    </div>
+   
+
+
+  
+      
+    
+      
+      
+      
+      
+      
+      
+          </div>
+      
+        </section>
+        <!--Section: Design Block-->
+      
+      </div>
+    
+      <%- include ('../layouts/userfooter.ejs') %> 

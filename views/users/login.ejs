@@ -1,0 +1,41 @@
+<%- include ('../layouts/userHeader.ejs') %>
+<link rel="stylesheet" href="users/assets/login/css/style.css">
+	<body>
+   <link rel="stylesheet" href="users/assets/login/fonts/linearicons/style.css">
+	<body>
+
+		<div class="wrapper">
+			<div class="inner">
+				<img src="images/image-1.png" alt="" class="image-1">
+				<form method="post" action="/login" onsubmit="return login()">
+					<span style="color: red;"><%-message%></span>
+					<h3>Login</h3>
+				
+					
+					<div class="form-holder">
+						<span class="lnr lnr-envelope"></span>
+						<input name="email" id="Email" onkeyup="loginEmail()" type="text" class="form-control" placeholder="Mail">
+					</div>
+          <span id="errEmail"></span>
+
+					<div class="form-holder">
+						<span class="lnr lnr-lock"></span>
+						<input name="password" id="Password" onkeyup="loginPassword()" type="password" class="form-control" placeholder="Password">
+					</div>
+          <span id="errorPassword"></span>
+					<button  onclick="loginEmail(),loginPassword()" type="submit">
+						<span>Login</span>
+					</button>
+					<a href="/resetPassword2"><span>forgot password?</span></a>
+				</form>
+				
+				<img src="images/image-2.png" alt="" class="image-2">
+			</div>
+			
+		</div>
+		
+		<script src="users/assets/login/js/jquery-3.3.1.min.js"></script>
+		<script src="users/assets/login/js/main.js"></script>
+    <script src="users/assets/login/js/loginValidation.js"></script>
+	</body>
+  <%- include ('../layouts/userfooter.ejs') %>
