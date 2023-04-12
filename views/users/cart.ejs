@@ -17,7 +17,7 @@
                     <div class="cart__total__procced">
                         <h6>Cart total</h6>
                         <ul>
-                            <li>Subtotal <span>$ 750.0</span></li>
+                            
                             <li>Total <span id="gTotal">₹<%=cartProduct.totalPrice%></span></li>
                         </ul>
                         <a href="/checkOut" class="primary-btn">Proceed to checkout</a>
@@ -55,7 +55,8 @@
                                     <td class="cart__quantity">
                                         <div class="pro-qty"> 
                                             <input type="text"  value="<%=key.qty%>" readonly>
-                                            <input type="hidden" value="<%-key.productId._id%>-<%=key.productId.price%>"
+                                            <input type="hidden" value="<%-key.productId._id%>-<%=key.productId.price%>%-<%-key.productId.stock%>"
+
                                         </div>
                                     </td>
                                     <td class="cart__total">₹ <span id="<%-key.productId._id%>"><%=key.productId.price*key.qty%></span></td>

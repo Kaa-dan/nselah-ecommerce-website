@@ -216,6 +216,7 @@ Created: Colorib
         var id=arr[0]
         var price = arr[1]
         const stock = arr[2]
+        console.log(stock)
 		var oldValue = $button.parent().find('input[type=text]').val(); 
 
 		if ($button.hasClass('inc')) {
