@@ -55,10 +55,11 @@
                                     <td class="cart__quantity">
                                         <div class="pro-qty"> 
                                             <input type="text"  value="<%=key.qty%>" readonly>
-                                            <input type="hidden" value="<%-key.productId._id%>-<%=key.productId.price%>%-<%-key.productId.stock%>"
+                                            <input type="hidden" value="<%-key.productId._id%>-<%=key.productId.price%>-<%-key.productId.stock%>"
 
                                         </div>
                                     </td>
+                            
                                     <td class="cart__total">₹ <span id="<%-key.productId._id%>"><%=key.productId.price*key.qty%></span></td>
                                     <td class="cart__close"><a href="/deleteCart?id=<%-key.productId._id%>"><span class="icon_close"></span></a></td>
                                 </tr>

@@ -245,6 +245,7 @@ Created: Colorib
       success: function(data) {
         console.log(data.total);
         document.getElementById(id).innerHTML=qty*price
+        console.log("hey",qty*price)
         document.getElementById('gTotal').innerHTML=data.total
       },
       error: function(jqXHR, textStatus, errorThrown) {

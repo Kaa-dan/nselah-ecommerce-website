@@ -10,14 +10,13 @@ const RazorPay = require('razorpay')
 
 const Address = require('../models/address')
 const Order = require("../models/orders");
-const { findByIdAndUpdate } = require('../models/product');
 require("dotenv").config();
 
 const loadHome = async (req,res,next)=>{
     try{
         
         const banner = await Banner.findOne({is_active:1})
-        const product= await Product.find()
+        const product= await Product.find().sort({$natural:-1})
         res.render('users/home',{product,banner,user:req.session.user})
     }catch(error){
         res.redirect('/error')
