@@ -9,7 +9,7 @@ const multer = require('../middlewares/multer')
 
 router.use(session({secret: 'secertt',resave:false,saveUninitialized:true}));
 
-router.get('/', auth.isLogout, adminController.loadLogin);
+router.get('/', adminController.loadLogin);
 router.post('/', adminController.verifyLogin);
 
 router.use(auth.isLogin) 
