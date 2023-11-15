@@ -719,7 +719,7 @@ const placeCod = async (req, res, next) => {
         res.render("users/success", { user: user });
       }
     } else {
-      res.redirect("/checkout");
+      res.redirect("/checkOut");
     }
   } catch (error) {
     res.redirect("/error");

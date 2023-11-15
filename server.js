@@ -42,9 +42,9 @@ app.use(
 
 // app.use( session({secret: 'sessionSecret',resave: false,saveUninitialized: true }))
 
-// const nocache = require("nocache");
+const nocache = require("nocache");
 
-// app.use(nocache());
+app.use(nocache());
 
 const PORT = process.env.PORT || 9999;
 
