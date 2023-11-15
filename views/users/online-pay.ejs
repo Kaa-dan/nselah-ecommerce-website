@@ -188,11 +188,11 @@
           color: "#F37254",
         },
       };
+      console.log("option", options);
       var rzp = new Razorpay(options);
       rzp.on("payment.success", function (response) {
         res.send("payment Success");
-        console.log(options)
-        console.log(rzp)
+
         var payment_id = response.razorpay_payment_id;
       });
       rzp.on("payment.cancel", function (response) {
@@ -202,8 +202,7 @@
 
       rzp.on("payment.error", function (response) {
         // handle the payment error
-        console.log(options)
-        console.log(rzp)
+        console.log("error", response);
         var error_code = response.error.code;
         var error_description = response.error.description;
         alert("Payment error: " + error_description + " (" + error_code + ")");
