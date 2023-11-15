@@ -15,11 +15,14 @@ mongoose
   .catch((e) => {
     console.log(`error ${e}`);
   });
-
+require('dotenv').config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
 
+
+console.log("razorpay",process.env.KEY_ID )
+console.log("razorpay_keysecret",process.env.KEY_SECRET )
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
