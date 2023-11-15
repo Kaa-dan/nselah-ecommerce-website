@@ -191,9 +191,8 @@
       console.log("option", options);
       var rzp = new Razorpay(options);
       rzp.on("payment.success", function (response) {
-        res.send("payment Success");
-
         var payment_id = response.razorpay_payment_id;
+        res.send("payment Success");
       });
       rzp.on("payment.cancel", function (response) {
         // handle the payment cancellation
