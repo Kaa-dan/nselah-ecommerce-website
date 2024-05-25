@@ -3,7 +3,7 @@ const Category = require("../models/category");
 const User = require("../models/userModel");
 const Product = require("../models/product");
 
-const fastSms = require("../middlewares/fast2sms");
+const { sendMessage } = require("../middlewares/fast2sms");
 const Banner = require("../models/banner");
 const Coupon = require("../models/coupon");
 const RazorPay = require("razorpay");
@@ -40,6 +40,7 @@ const loadLogin = async (req, res, next) => {
 
 const loadOTP = async (req, res, next) => {
   try {
+    console.log('loaded otp')
     const existingUser = await User.findOne({
       $or: [{ email: req.body.email }, { mobile: req.body.phone }],
     });
@@ -57,8 +58,8 @@ const loadOTP = async (req, res, next) => {
         is_admin: 0,
       };
 
-      newOtp = fastSms.sendMessage(req.body.phone, res);
-
+      newOtp = await sendMessage(req.body.email);
+      console.log(newOtp);
       req.session.tempUser = tempUser;
       req.session.otp = newOtp;
       // const userData = await User.find();
@@ -70,6 +71,7 @@ const loadOTP = async (req, res, next) => {
     }
   } catch (error) {
     res.redirect("/error");
+    console.log(error.message)
   }
 };
 
@@ -86,7 +88,7 @@ const logout = async (req, res) => {
 
 const resendOtp = async (req, res, next) => {
   try {
-    newOtp = fastSms.sendMessage(req.session.tempUser.mobile, res);
+    newOtp = await sendMessage(req.session.tempUser.email);
 
     req.session.otp = newOtp;
     // const userData = await User.find();
@@ -102,6 +104,7 @@ const resendOtp = async (req, res, next) => {
 
 const verifyOtp = async (req, res, next) => {
   try {
+    console.log(req.session, "nithin raj");
     if (req.session.otp == req.body.otp) {
       const password = await bcrypt.hash(req.session.tempUser.password, 10);
 
@@ -116,12 +119,16 @@ const verifyOtp = async (req, res, next) => {
       const user = await User.findOne({ email, is_admin: 0 });
 
       if (user) {
+        console.log("nithin raj");
         req.session.tempUser = null;
         req.session.otp = null;
         req.session.user = user;
         req.session.user_id = user._id;
         req.session.user1 = true;
-        res.redirect("/");
+        // res.redirect("/");
+        const banner = await Banner.findOne({ is_active: 1 });
+        const product = await Product.find().sort({ $natural: -1 });
+        res.render("users/home", { product, banner, user: user });
       } else {
         0;
         res.render("users/otp");
@@ -138,7 +145,7 @@ const verifyLogin = async (req, res) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
-console.log(email, password)
+    console.log(email, password);
     const user = await User.findOne({
       email,
       is_admin: 0,
@@ -452,7 +459,7 @@ const loadOtpVerification = async (req, res) => {
   try {
     const user = req.session.user;
     console.log(user);
-    const mobile = req.body.phone;
+    const mobile = req.body.email;
     console.log(mobile);
     //   console.log(req.ression.user.mobile)
     if (user.mobile == mobile) {
@@ -460,7 +467,7 @@ const loadOtpVerification = async (req, res) => {
       const user = await User.findOne({ mobile: mobile });
       if (user) {
         console.log(2);
-        newOtp = fastSms.sendMessage(mobile, res);
+        newOtp = await sendMessage(mobile);
         req.session.otp = newOtp;
         req.session.mob = mobile;
         console.log(newOtp);
@@ -485,7 +492,7 @@ const loadOtpVerification = async (req, res) => {
 
 const resendOtpVerification = async (req, res, next) => {
   try {
-    newOtp = fastSms.sendMessage(req.session.mob, res);
+    newOtp = await sendMessage(req.session.email);
     req.session.otp = newOtp;
     console.log(newOtp);
     // const userData = await User.find();
@@ -951,13 +958,13 @@ const loadOtpVerification2 = async (req, res) => {
     const user = await User.find({ mobile: req.body.phone });
 
     console.log(user);
-    const mobile = req.body.phone;
+    const mobile = req.body.email;
     console.log(mobile);
 
     if (user) {
       console.log(1);
 
-      newOtp = fastSms.sendMessage(mobile, res);
+      newOtp = await sendMessage(mobile);
       req.session.otp = newOtp;
       req.session.mob = mobile;
       console.log(newOtp);
@@ -978,7 +985,7 @@ const loadOtpVerification2 = async (req, res) => {
 
 const resendOtpVerification2 = async (req, res, next) => {
   try {
-    newOtp = fastSms.sendMessage(req.session.mob, res);
+    newOtp = await sendMessage(req.session.email);
     req.session.otp = newOtp;
     console.log(newOtp);
     // const userData = await User.find();
